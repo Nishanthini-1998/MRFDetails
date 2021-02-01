@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmployeeMaster", "EmployeeMaster\EmployeeMaster.csproj", "{1447D6DC-3A3E-40D7-8788-F54DFFF1869D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataControl", "DAL\DataControl.csproj", "{50EFFE31-2368-45B2-BEA4-20C1E5018326}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Models", "BL\Models.csproj", "{FE7C6782-034E-4F9D-B96A-A9D467298664}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1447D6DC-3A3E-40D7-8788-F54DFFF1869D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1447D6DC-3A3E-40D7-8788-F54DFFF1869D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1447D6DC-3A3E-40D7-8788-F54DFFF1869D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1447D6DC-3A3E-40D7-8788-F54DFFF1869D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{50EFFE31-2368-45B2-BEA4-20C1E5018326}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{50EFFE31-2368-45B2-BEA4-20C1E5018326}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{50EFFE31-2368-45B2-BEA4-20C1E5018326}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{50EFFE31-2368-45B2-BEA4-20C1E5018326}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FE7C6782-034E-4F9D-B96A-A9D467298664}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE7C6782-034E-4F9D-B96A-A9D467298664}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE7C6782-034E-4F9D-B96A-A9D467298664}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE7C6782-034E-4F9D-B96A-A9D467298664}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
