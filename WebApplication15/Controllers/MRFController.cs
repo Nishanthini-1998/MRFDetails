@@ -12,7 +12,7 @@ namespace WebApplication15.Controllers
         MRFDB mrfDB = new MRFDB();
         UserDetails userdetails = new UserDetails();
 
-        // GET: MRF SUCCESS PROJECT
+        // GET: MRF SUCCESS PROJECTS
         public ActionResult GetMRFDetails()
         {
             return View();
