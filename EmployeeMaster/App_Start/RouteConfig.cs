@@ -11,8 +11,9 @@ namespace EmployeeMaster
     {
         public static void RegisterRoutes(RouteCollection routes)
         {
+            /////comment....
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
-            /////comment
+          
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
