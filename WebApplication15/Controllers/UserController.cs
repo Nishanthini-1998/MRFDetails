@@ -15,6 +15,7 @@ namespace WebApplication15.Controllers
         {
             return View();
         }
+        //return to the login page
 
         public JsonResult GetMyMRF(string UserID, string UserPassword)
         {
