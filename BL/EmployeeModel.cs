@@ -22,4 +22,10 @@ namespace EmployeeMaster
         public int IsPasswordChanged { get; set; }
 
     }
+    public class CompanyModel
+    {
+        public int Company_Id { get; set; }
+        public string Company_Code { get; set; }
+        public string Company_Name { get; set; }
+    }
 }

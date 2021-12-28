@@ -1,41 +1,146 @@
 ﻿<!DOCTYPE html>
-<html>
+<html lang="en" style="background-color:white;">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
-    <title>@ViewBag.Title</title>
-    @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
-</head>
-<body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, null)</li>
-                    <li>@Html.ActionLink("API", "Index", "Help", new { area = "" }, null)</li>
-                </ul>
-            </div>
-        </div>
-    </div>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-        </footer>
-    </div>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AKRA</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/Scss/main.min.css" />
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css">
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    @*<script src="/path/to/jquery-ui.min.js"></script>*@
+    <script src="~/Scripts/jquery-ui.min.js"></script>
+    <script src="~/Scripts/sweetalert.min.js"></script>
+    <script src="~/Scripts/CoreREST.js?@DateTime.Now.Ticks"></script>
+    <link href="~/Content/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+    <script src="~/Scripts/bootstrap-datetimepicker.min.js"></script>
+    <link href="~/Content/jquery.multiselect.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery.multiselect.js"></script>
+    <link href="~/Content/ej2/material.css" rel="stylesheet" />
+    <script src="~/Scripts/ej2/ej2.min.js"></script>
+
+    <style>
+        .content_section {
+            background-color: #fff !important;
+            padding: 41px 23px 43px 15px !important;
+            font-size: 14px !important;
+            font-family: Arial, Helvetica, sans-serif !important;
+        }
+
+        .page_template {
+            padding: 0px !important;
+        }
+
+        th {
+            text-align: center;
+        }
+
+        .table {
+            width: 100%;
+            max-width: 97%;
+            margin-bottom: 1rem;
+            background-color: transparent;
+        }
+
+        .form-control {
+            font-size: 12px !important;
+            width: 100% !important;
+        }
+
+        .dropdown {
+            border-radius: 0;
+            border: 0;
+        }
+
+        .dropdown-menu {
+            border: 0;
+            top: 80%;
+            border-radius: 0px 0px 5px 5px;
+        }
+
+        .dropdown-item:hover {
+            color: #fff;
+        }
+
+        .dropdown-menu a {
+            color: #fff;
+        }
+
+        .navbar .nav-item .nav-link:hover .navbar .nav-item .nav-link {
+            color: red !important;
+        }
+
+        .navbar-brand {
+            font-size: 21px;
+        }
+
+        .clstxtarea {
+            font-size: 14px;
+        }
+
+        .top_menu ul li a {
+            color: #000 !important;
+        }
+    </style>
+    <script>
+        var User_Type_Id = "";
+        var Company_Id = "";
+        var User_Id = "";
+        var User_Access_Type_Id = "";
+    </script>
+</head>
+<body style="font-family:Arial, Helvetica, sans-serif !important; font-size:14px !important;">
+    <main class="wrap_parent">
+        <section class="top_menu clearfix" style="border-bottom:2px solid #0092b8">
+            <nav class="navbar navbar-expand-sm navbar-light p-0">
+                <span class="px-2 border-right">
+                    <p class="m-0">
+                        <img src="../../Content/Images/egi.swaas.net.jpg" />
+                    </p>
+                    <p class="m-0 text-center" style="color: #0092b8;font-size: 19px;"><b>P M S</b></p>
+                </span>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse px-3" id="navbarTogglerDemo03">
+                    <ul class="navbar-nav mr-auto mt-2 mt-lg-0" id="menu"></ul>
+                    <div>
+                        <span>Welcome <span id="spnuser"></span></span> <br>
+                        <a href="/Login/Logout" id="registerLink" style="font-size: 16px;">Logout</a>
+                    </div>
+                </div>
+            </nav>
+        </section>
+        <main class="page_template" role="main">
+            <section class="content_section col-xs-12" id="dvBodyload">
+                @RenderBody()
+            </section>
+        </main>
+    </main>
 </body>
 </html>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+      //  fnshowusertypemenu();
+       // common.fngetuserinfo();
+        //$('.navbar-light .dmenu').hover(function () {
+        //    $(this).find('.sm-menu').first().stop(true, true).slideDown(150);
+        //}, function () {
+        //    $(this).find('.sm-menu').first().stop(true, true).slideUp(105)
+        //});
+    });
+</script>

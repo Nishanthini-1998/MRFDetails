@@ -3,9 +3,9 @@ var emplst = '';
 var lstincative = '';
 var emp = {
     defaults: {
-        Company_Id: "",
-        User_Id: "",
-        Division_Id: "",
+        Company_Id: 1,
+        User_Id: 1,
+        Division_Id: 1,
     },
     init: function () {
         emp.fngetEmployeesInactive();
@@ -29,9 +29,9 @@ var emp = {
                 Employee_Id: $("#hdnempid").val()
             }
             if (mode == 0)
-                CoreREST.requestInvoke("AKRA/V1/Employee", '', obj, "POST", emp.fnsaveempsuccesscallback, emp.fnfailurecallback, null);
+                CoreREST.requestInvoke("Emp/V1/Employee", '', obj, "POST", emp.fnsaveempsuccesscallback, emp.fnfailurecallback, null);
             else
-                CoreREST.requestInvoke("AKRA/V1/UpdateEmployee", '', obj, "POST", emp.fnsaveempsuccesscallback, emp.fnfailurecallback, null);
+                CoreREST.requestInvoke("Emp/V1/UpdateEmployee", '', obj, "POST", emp.fnsaveempsuccesscallback, emp.fnfailurecallback, null);
         }
     },
     fnsaveempsuccesscallback: function () {
@@ -49,8 +49,23 @@ var emp = {
     },
 
     fngetEmployees: function () {
+        debugger;
         var p = emp.defaults.Company_Id;
-        CoreREST.requestInvoke("AKRA/V1/GetEmployees", p, null, "GET", emp.fnbindemployeesuccesscallback, emp.fnfailurecallback, null);
+
+        //CoreREST.requestInvoke("Emp/V1/GetEmployees", p, null, "GET", emp.fnbindemployeesuccesscallback, emp.fnfailurecallback, null);
+        $.ajax({
+            url: '/Employee/GetEmployees',
+            data: 'Company_Id=' + emp.defaults.Company_Id,
+            async: false,
+            type: 'GET',
+            success: function (result) {
+                debugger;
+                emp.fnbindemployeesuccesscallback(result);
+            },
+            error: function (e) {
+                emp.fnfailurecallback(e);
+            }
+        });
     },
     fnbindemployeesuccesscallback: function (response) {
         $('#Grid').html("");
@@ -75,7 +90,7 @@ var emp = {
             columns: [
                 { headerText: 'Edit' },
                //  { headerText: 'Delete' },
-                  { headerText: 'Change Status' },
+                //  { headerText: 'Change Status' },
                 { field: 'Employee_Name', headerText: 'Employee Name' },
                 { field: 'Employee_Code', headerText: 'Employee Number' },
                 { field: 'User_Type_Name', headerText: 'Designation' },
@@ -141,7 +156,7 @@ var emp = {
         mode = 2;
         debugger;
         var p = emp.defaults.Company_Id + '/' + resp.data.Employee_Id + '/' + resp.data.Record_Status;
-        CoreREST.requestInvoke("AKRA/V1/ChangeEmployeeStatus", p, null, "POST", emp.fnchangesuccesscallback, emp.fnfailurecallback, null);
+        CoreREST.requestInvoke("Emp/V1/ChangeEmployeeStatus", p, null, "POST", emp.fnchangesuccesscallback, emp.fnfailurecallback, null);
     },
     fnchangesuccesscallback: function (response) {
         debugger;
@@ -154,7 +169,7 @@ var emp = {
     },
     fngetEmployeesInactive: function () {
         var p = emp.defaults.Company_Id;
-        CoreREST.requestInvoke("AKRA/V1/GetEmployeesInactive", p, null, "GET", emp.fnbindemployeeinactivesuccesscallback, emp.fnfailurecallback, null);
+        CoreREST.requestInvoke("Emp/V1/GetEmployeesInactive", p, null, "GET", emp.fnbindemployeeinactivesuccesscallback, emp.fnfailurecallback, null);
     },
     fnbindemployeeinactivesuccesscallback: function (response) {
         debugger;
@@ -178,7 +193,7 @@ var emp = {
             height: 400,
             toolbar: ['ColumnChooser', 'ExcelExport', 'Print', 'Search'],
             columns: [
-                { headerText: 'Change Status' },
+               // { headerText: 'Change Status' },
                 { field: 'Employee_Name', headerText: 'Employee Name' },
                 { field: 'Employee_Code', headerText: 'Employee Number' },
                 { field: 'User_Type_Name', headerText: 'Designation' },
@@ -214,7 +229,7 @@ var emp = {
             button: "Proceed",
         }).then(() => {
             var p = resp.data.Employee_Id + '/' + emp.defaults.User_Id;
-            CoreREST.requestInvoke("AKRA/V1/DeleteEmployees", p, null, "POST", emp.fnsuccesscallback, emp.fnfailurecallback, null);
+            CoreREST.requestInvoke("Emp/V1/DeleteEmployees", p, null, "POST", emp.fnsuccesscallback, emp.fnfailurecallback, null);
         });
     },
     fnsuccesscallback: function (response) {

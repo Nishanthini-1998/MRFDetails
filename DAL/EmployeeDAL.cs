@@ -24,15 +24,15 @@ namespace EmployeeMaster
                 using (IDbConnection conn = IHRMSDbOpenConnection())
                 {
                     var p = new DynamicParameters();
-                    p.Add("@Company_Id", obj.Company_Id);
+                    p.Add("@Company_Id", 1);
                     p.Add("@Employee_Name", obj.Employee_Name);
                     p.Add("@Employee_Code", obj.Employee_Code);
                     p.Add("@Region_Name", obj.Region_Name);
-                    p.Add("@User_Type", obj.User_Type_Id);
+                    p.Add("@User_Type", 2);
                     p.Add("@Email", obj.Email_Id);
                     p.Add("@Password", obj.Password);
                     p.Add("@loginuser", obj.Created_By);
-                    conn.Query<dynamic>(SP_AKRA_SaveEmployee, p, commandType: CommandType.StoredProcedure).ToList();
+                    conn.Execute(SP_AKRA_SaveEmployee, p, commandType: CommandType.StoredProcedure);
                     conn.Close();
                 }
             }

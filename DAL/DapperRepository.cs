@@ -4,8 +4,11 @@ using System.Data;
 using System.Configuration;
 using System.Data.SqlClient;
 using System.Text;
-using System.Collections.Generic; 
+using System.Collections.Generic;
 using Dapper;
+using System.Net.Http;
+using System.Web.Http;
+using EmployeeMaster;
 #endregion Usings
 
 namespace EmployeeMaster
@@ -322,7 +325,12 @@ namespace EmployeeMaster
         public string CommonPassword { get; set; }
     }
 
-
+    public class CompanyModel
+    {
+        public int Company_Id { get; set; }
+        public string Company_Code { get; set; }
+        public string Company_Name { get; set; }
+    }
 }
 
 
