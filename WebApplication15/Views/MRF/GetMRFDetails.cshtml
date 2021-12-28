@@ -1,0 +1,237 @@
+﻿
+
+
+@{
+    Layout = null;
+}
+@{
+    ViewBag.Title = "MRF Definer";
+}
+
+<h2>General Information</h2>
+<style>
+
+    input.right {
+        float: right;
+    }
+</style>
+<div class="container">
+    <form>
+
+        <div class="form-group">
+
+            <label for="Name">Position Name</label>
+            <input type="text" class="form-control" id="PositionName" placeholder="PositionName" />
+
+            <label for="Text">MRF Created By</label>
+            <input type="text" class="form-control" id="CreatedBy" />
+
+            <label>MRF Created Date</label>
+            <input type="text" class="form-control" id="CreatedDate" />
+
+            <label>Position to be filled before</label><br />
+            <input type="date" id="Filledbefore" name="BeforeDate" required pattern="\d{4}-\d{2}-\d{2}">
+            <button type="button" value="View My MRF" class="right" onclick="MyMRF()">
+                View My MRF
+
+            </button>
+        </div>
+
+
+    </form>
+</div>
+
+
+<h2>MRF Details</h2>
+<div class="container">
+
+    <form>
+
+        <div>
+            <p>Vacancy for:</p>
+            <input type="radio" id="FieldUser" name="field" value="1">
+            <label>Field User</label>
+            <input type="radio" id="Non-FieldUser" name="field" value="2">
+            <label>Non-Field User</label>
+        </div>
+        <div>
+            <p>Vacancy Type:</p>
+            <input type="radio" id="Tobevacant" name="field1" value="1">
+            <label>To be vacant</label>
+            <input type="radio" id="vacant" name="field1" value="2">
+            <label>vacant</label>
+            <input type="radio" id="Expansion" name="field1" value="3">
+            <label>Expansion</label>
+        </div>
+        <div class="form-group">
+            <label>Territory/HP</label>
+            <input type="text" class="form-control" id="Territory" />
+        </div>
+        <div class="form-group">
+            <label>Division Name</label>
+            <input type="text" class="form-control" id="DivisionName" /><br />
+        </div>
+        <div>
+
+            <h4>Experience</h4><br />
+            <label>Min Yr(s)</label>
+            <input type="number" id="MinYear"
+                   name="Number" placeholder="0" />
+            <label>Max Yr(s)</label>
+            <input type="number" id="MaxYear"
+                   name="Number" placeholder="0" />
+
+        </div><br /><br />
+        <div>
+
+            <h4>CTC PerAnnum(in lakhs)</h4><br />
+            <label>Min</label>
+            <input type="number" id="Minctc"
+                   name="Number" placeholder="0" />
+            <label>Max</label>
+            <input type="number" id="Maxctc"
+                   name="Number" placeholder="0" />
+
+        </div><br /><br />
+        <div>
+
+            <label>Additional Requirement</label>
+            <input type="text" id="AdditionalRequirement" />
+
+        </div>
+
+    </form>
+</div><br />
+
+<button type="button" value="submit" onclick="Add()">Submit</button>
+
+<p id="demo"></p>
+
+
+
+
+<script src="~/Scripts/jquery-3.3.1.js"></script>
+<script src="~/Scripts/bootstrap.js"></script>
+<link href="~/Content/bootstrap.css" rel="stylesheet" />
+
+
+<script>
+    var Sessionid = "@Session["Userid"]";
+    function MyMRF() {
+        window.location = "http://localhost:61474/UserDetails/Index";
+    }
+
+    function Add() {
+
+        var mrfObj = {
+
+            PositionName: $('#PositionName').val(),
+            CreatedBy: $('#CreatedBy').val(),
+            CreatedDate: $('#CreatedDate').val(),
+            Filledbefore: $('#Filledbefore').val(),
+            VacancyforID: $('input[name="field"]:checked').val(),
+            VacancytypeID: $('input[name="field1"]:checked').val(),
+            Territory: $('#Territory').val(),
+            DivisionName: $('#DivisionName').val(),
+            MinYear: $('#MinYear').val(),
+            MaxYear: $('#MaxYear').val(),
+            Minctc: $('#Minctc').val(),
+            Maxctc: $('#Maxctc').val(),
+            AdditionalRequirement: $('#AdditionalRequirement').val()
+
+
+        };
+        $.ajax({
+            url: "/MRF/Add",
+            data: JSON.stringify(mrfObj),
+            type: "POST",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (result) {
+                $('.demo').html(html);
+            },
+            error: function (errormessage) {
+                alert(errormessage.responseText);
+            }
+        });
+    }
+
+
+    $(document).ready(function () {
+        $('#CreatedBy').val(Sessionid);
+        //loadData();
+    });
+
+    //Load Data function
+    function loadData() {
+        $.ajax({
+                    url: "/MRF/List",
+                   type: "GET",
+            contentType: "application/json;charset=utf-8",
+               dataType: "json",
+                success: function (result) {
+                    var html = '';
+                    $.each(result, function (key, item) {
+                    var date = item.CreatedDate;
+                    var nowDate = new Date(parseInt(date.substr(6)));
+
+                    var FilledBefore = item.Filledbefore;
+                    var FilledBefore_Formated = new Date(parseInt(FilledBefore.substr(6)));
+                    html += '<tr>';
+                   // if (item.StatusID == 1 ) {
+
+    //                    html += '<td><a href="#" onclick="return getbyID(' + item.ID + ')">Edit</a> | <a href="#" onclick="Delete(' + item.ID + ')">Delete</a></td>';
+    //                }
+    //                else {
+    //                    html += '<td colspan="2">' + item.StatusDetails + '</td>';
+    //                }
+                        html += '<td>' + item.UserID + '</td>';
+                    html += '<td>' + item.PositionName + '</td>';
+                    html += '<td>' + item.CreatedBy + '</td>';
+                    html += '<td>' + nowDate.toDateString() + '</td>';
+                    html += '<td>' + FilledBefore_Formated.toDateString() + '</td>';
+                    html += '<td>' + item.Vacancyfor + '</td>';
+                    html += '<td>' + item.Vacancytype + '</td>';
+                    html += '<td>' + item.Territory + '</td>';
+                    html += '<td>' + item.DivisionName + '</td>';
+                    html += '<td>' + item.MinYear + '</td>';
+                    html += '<td>' + item.MaxYear + '</td>';
+                    html += '<td>' + item.Minctc + '</td>';
+                    html += '<td>' + item.Maxctc + '</td>';
+                    html += '<td>' + item.AdditionalRequirement + '</td>'
+
+
+                   html += '</tr>';
+                });
+                $('.tbody').html(html);
+            },
+            error: function (errormessage) {
+                alert(errormessage.responseText);
+            }
+        });
+    }
+  // function UserStatus(ID1, status1) {
+    //    alert(ID1 + '' + status1);
+    //  var ans = true;
+    //if (status == 3) {
+    //        ans = confirm("Are you sure you want to reject this record?");
+   //   }
+    //    if (ans) {
+    //        $.ajax({
+                //url: "/MRF/UserStatus",
+                //data: { ID: ID1, status: status1 },
+                //type: "GET",
+                //contentType: "application/json;charset=utf-8",
+                //dataType: "json",
+   //             success: function (result) {
+   //                 loadData();
+   //             },
+   //             error: function (errormessage) {
+   //                 alert(errormessage.responseText);
+   //             }
+   //         });
+
+
+
+
+</script>

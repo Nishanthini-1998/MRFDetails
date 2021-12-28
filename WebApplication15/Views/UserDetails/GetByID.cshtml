@@ -1,0 +1,146 @@
+﻿@model WebApplication15.Models.MRFMODEL
+
+<h2>General Information</h2>
+<style>
+
+    input.right {
+        float: right;
+    }
+</style>
+<div class="container">
+    <form>
+
+        <div class="form-group">
+
+            <label for="Name">Position Name</label>
+            <input type="text" class="form-control" id="PositionName" value="@Model.PositionName" placeholder="PositionName" />
+
+            <label for="Text">MRF Created By</label>
+            <input type="text" class="form-control" value="@Model.CreatedBy" id="CreatedBy" />
+
+            <label>MRF Created Date</label>
+            <input type="text" class="form-control" value="@Model.CreatedDate" id="CreatedDate" />
+
+            <label>Position to be filled before</label><br />
+            <input type="date" id="Filledbefore" value="@Model.Filledbefore.ToString("dd-mm-yyyy")" name="BeforeDate" >
+            <button type="button" value="View My MRF" class="right" onclick="MyMRF()">
+                View My MRF
+
+            </button>
+        </div>
+
+
+    </form>
+</div>
+
+
+<h2>MRF Details</h2>
+<div class="container">
+
+    <form>
+
+        <div>
+            <p>Vacancy for:</p>
+            <input type="radio" id="FieldUser" name="field" value="1">
+            <label>Field User</label>
+            <input type="radio" id="FieldUser" name="field" value="2">
+            <label>Non-Field User</label>
+        </div>
+        <div>
+            <p>Vacancy Type:</p>
+            <input type="radio" id="vacant" name="field1" value="1">
+            <label>To be vacant</label>
+            <input type="radio" id="vacant" name="field1" value="2">
+            <label>vacant</label>
+            <input type="radio" id="vacant" name="field1" value="3">
+            <label>Expansion</label>
+        </div>
+        <div class="form-group">
+            <label>Territory/HP</label>
+            <input type="text" class="form-control" value="@Model.Territory" id="Territory" />
+        </div>
+        <div class="form-group">
+            <label>Division Name</label>
+            <input type="text" class="form-control"value="@Model.DivisionName" id="DivisionName" /><br />
+        </div>
+        <div>
+
+            <h4>Experience</h4><br />
+            <label>Min Yr(s)</label>
+            <input type="number" id="MinYear" value="@Model.MinYear"
+                   name="Number" placeholder="0" />
+            <label>Max Yr(s)</label>
+            <input type="number" id="MaxYear"  value="@Model.MaxYear"
+                   name="Number" placeholder="0" />
+
+        </div><br /><br />
+        <div>
+
+            <h4>CTC PerAnnum(in lakhs)</h4><br />
+            <label>Min</label>
+            <input type="number" id="Minctc" value="@Model.Minctc"
+                   name="Number" placeholder="0" />
+            <label>Max</label>
+            <input type="number" id="Maxctc" value="@Model.Maxctc"
+                   name="Number" placeholder="0" />
+
+        </div><br /><br />
+        <div>
+
+            <label>Additional Requirement</label>
+            <input type="text" id="AdditionalRequirement" value="@Model.AdditionalRequirement"/>
+
+        </div>
+
+    </form>
+</div><br />
+
+<button type="button" value="submit" onclick="Add(@Model.ID)">SaveEditMRF</button>
+<p id="demo"></p>
+<script>
+$(document).ready(function () {
+    $('input:radio[id="FieldUser"][value=' + @Model.Vacancyfor + ']').attr('checked', true);
+    $('input:radio[id="vacant"][value=' + @Model.Vacancytype + ']').attr('checked', true);
+    });
+
+    function Add(id) {
+        
+
+            var mrfObj = {
+                ID : $('#ID').val(),
+                PositionName: $('#PositionName').val(),
+                CreatedBy: $('#CreatedBy').val(),
+                CreatedDate: $('#CreatedDate').val(),
+                Filledbefore: $('#Filledbefore').val(),
+                VacancyforID: $('input[name="field"]:checked').val(),
+                VacancytypeID: $('input[name="field1"]:checked').val(),
+                Territory: $('#Territory').val(),
+                DivisionName: $('#DivisionName').val(),
+                MinYear: $('#MinYear').val(),
+                MaxYear: $('#MaxYear').val(),
+                Minctc: $('#Minctc').val(),
+                Maxctc: $('#Maxctc').val(),
+                AdditionalRequirement: $('#AdditionalRequirement').val()
+
+
+            };
+            $.ajax({
+                url: "/MRF/List",
+                data: JSON.stringify(mrfObj),
+                type: "POST",
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                success: function (result) {
+                    alert('successfully saved'); 
+                },
+                error: function (errormessage) {
+                    alert(errormessage.responseText);
+                }
+            });
+        }
+
+
+    
+</script>
+
+
