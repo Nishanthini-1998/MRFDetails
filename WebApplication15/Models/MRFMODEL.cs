@@ -25,6 +25,8 @@ namespace WebApplication15.Models
         public int Minctc { get; set; }
         public int Maxctc { get; set; }
         public string AdditionalRequirement { get; set; }
-       
+
+        public string status { get; set; }
+
     }
 }
