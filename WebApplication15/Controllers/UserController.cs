@@ -10,7 +10,7 @@ namespace WebApplication15.Controllers
     public class UserController : Controller
     {
         UserDB userdb = new UserDB();
-        // GET: User............
+        // GET: User...............
         public ActionResult UserIndex()
         {
             return View();
